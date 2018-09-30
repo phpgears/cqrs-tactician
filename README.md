@@ -34,21 +34,18 @@ require './vendor/autoload.php';
 
 ```php
 use Gears\CQRS\Tactician\CommandBus;
+use Gears\CQRS\Tactician\CommandHandlerMiddleware;
 use Gears\CQRS\Tactician\CommandInflector;
 use League\Tactician\CommandBus as TacticianBus;
+use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
 use League\Tactician\Handler\Locator\InMemoryLocator;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Plugins\LockingMiddleware;
 
 $commandToHandlerMap = [];
         
 $tacticianBus = new TacticianBus([
     new LockingMiddleware(),
-    new TacticianHandlerMiddleware(
-        new ClassNameExtractor(),
-        new InMemoryLocator($commandToHandlerMap),
-        new CommandInflector()
-    ),
+    new CommandHandlerMiddleware(new InMemoryLocator($commandToHandlerMap)),
 ]);
 
 $commandBus = new CommandBus($tacticianBus);
@@ -61,21 +58,18 @@ $commandBus->handle($command);
 
 ```php
 use Gears\CQRS\Tactician\QueryBus;
+use Gears\CQRS\Tactician\QueryHandlerMiddleware;
 use Gears\CQRS\Tactician\QueryInflector;
 use League\Tactician\CommandBus as TacticianBus;
+use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
 use League\Tactician\Handler\Locator\InMemoryLocator;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Plugins\LockingMiddleware;
 
 $queryToHandlerMap = [];
         
 $tacticianBus = new TacticianBus([
     new LockingMiddleware(),
-    new TacticianHandlerMiddleware(
-        new ClassNameExtractor(),
-        new InMemoryLocator($queryToHandlerMap),
-        new QueryInflector()
-    ),
+    new QueryHandlerMiddleware(new InMemoryLocator($queryToHandlerMap)),
 ]);
 
 $queryBus = new QueryBus($tacticianBus);
