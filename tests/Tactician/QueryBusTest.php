@@ -38,7 +38,7 @@ class QueryBusTest extends TestCase
     }
 
     /**
-     * @expectedException \Gears\CQRS\Tactician\Exception\QueryReturnException
+     * @expectedException \Gears\CQRS\Exception\QueryReturnException
      * @expectedExceptionMessageRegExp /^Query handler for .+\\QueryStub should return an instance of Gears\\DTO\\DTO$/
      */
     public function testInvalidReturn(): void

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Gears\CQRS\Tactician;
 
 use Gears\CQRS\Exception\InvalidQueryException;
+use Gears\CQRS\Exception\InvalidQueryHandlerException;
 use Gears\CQRS\Query;
 use Gears\CQRS\QueryHandler;
-use Gears\CQRS\Tactician\Exception\InvalidQueryHandlerException;
 use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 
 final class QueryInflector implements MethodNameInflector

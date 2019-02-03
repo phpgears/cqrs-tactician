@@ -33,7 +33,7 @@ class QueryInflectorTest extends TestCase
     }
 
     /**
-     * @expectedException \Gears\CQRS\Tactician\Exception\InvalidQueryHandlerException
+     * @expectedException \Gears\CQRS\Exception\InvalidQueryHandlerException
      * @expectedExceptionMessage Query handler must implement Gears\CQRS\QueryHandler interface, string given
      */
     public function testInvalidCommandHandler(): void

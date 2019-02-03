@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician;
 
+use Gears\CQRS\Exception\QueryReturnException;
 use Gears\CQRS\Query;
 use Gears\CQRS\QueryBus as QueryBusInterface;
-use Gears\CQRS\Tactician\Exception\QueryReturnException;
 use Gears\DTO\DTO;
 use League\Tactician\CommandBus as TacticianCommandBus;
 

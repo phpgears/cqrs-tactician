@@ -16,7 +16,7 @@ namespace Gears\CQRS\Tactician;
 use Gears\CQRS\Command;
 use Gears\CQRS\CommandHandler;
 use Gears\CQRS\Exception\InvalidCommandException;
-use Gears\CQRS\Tactician\Exception\InvalidCommandHandlerException;
+use Gears\CQRS\Exception\InvalidCommandHandlerException;
 use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 
 final class CommandInflector implements MethodNameInflector

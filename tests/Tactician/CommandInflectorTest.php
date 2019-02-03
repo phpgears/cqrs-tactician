@@ -33,7 +33,7 @@ class CommandInflectorTest extends TestCase
     }
 
     /**
-     * @expectedException \Gears\CQRS\Tactician\Exception\InvalidCommandHandlerException
+     * @expectedException \Gears\CQRS\Exception\InvalidCommandHandlerException
      * @expectedExceptionMessage Command handler must implement Gears\CQRS\CommandHandler interface, string given
      */
     public function testInvalidCommandHandler(): void
