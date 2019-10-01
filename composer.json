@@ -33,6 +33,7 @@
     "brainmaestro/composer-git-hooks": "^2.1",
     "friendsofphp/php-cs-fixer": "^2.0",
     "infection/infection": "^0.9",
+    "phpmd/phpmd": "^2.0",
     "phpstan/extension-installer": "^1.0",
     "phpstan/phpstan": "~0.11.12",
     "phpstan/phpstan-deprecation-rules": "~0.11.2",
