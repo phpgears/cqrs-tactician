@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician\Tests;
 
+use Gears\CQRS\Exception\QueryReturnException;
 use Gears\CQRS\Tactician\QueryBus;
 use Gears\CQRS\Tactician\Tests\Stub\DTOStub;
 use Gears\CQRS\Tactician\Tests\Stub\QueryStub;
@@ -29,26 +30,27 @@ class QueryBusTest extends TestCase
         $tacticianMock = $this->getMockBuilder(TacticianBus::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $tacticianMock->expects($this->once())
+        $tacticianMock->expects(static::once())
             ->method('handle')
-            ->will($this->returnValue(DTOStub::instance()));
+            ->will(static::returnValue(DTOStub::instance()));
         /* @var TacticianBus $tacticianMock */
 
         (new QueryBus($tacticianMock))->handle(QueryStub::instance());
     }
 
-    /**
-     * @expectedException \Gears\CQRS\Exception\QueryReturnException
-     * @expectedExceptionMessageRegExp /^Query handler for .+\\QueryStub should return an instance of Gears\\DTO\\DTO$/
-     */
     public function testInvalidReturn(): void
     {
+        $this->expectException(QueryReturnException::class);
+        $this->expectExceptionMessageRegExp(
+            '/^Query handler for .+\\\QueryStub should return an instance of Gears\\\DTO\\\DTO$/'
+        );
+
         $tacticianMock = $this->getMockBuilder(TacticianBus::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $tacticianMock->expects($this->once())
+        $tacticianMock->expects(static::once())
             ->method('handle')
-            ->will($this->returnValue(false));
+            ->will(static::returnValue(false));
         /* @var TacticianBus $tacticianMock */
 
         (new QueryBus($tacticianMock))->handle(QueryStub::instance());

@@ -22,7 +22,10 @@ use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 final class CommandInflector implements MethodNameInflector
 {
     /**
-     * {@inheritdoc}
+     * Return the method name to call on the command handler and return it.
+     *
+     * @param mixed $command
+     * @param mixed $handler
      *
      * @throws InvalidCommandException
      * @throws InvalidCommandHandlerException

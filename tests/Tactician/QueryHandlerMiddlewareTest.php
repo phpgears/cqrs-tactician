@@ -26,9 +26,9 @@ class QueryHandlerMiddlewareTest extends TestCase
         $locatorMock = $this->getMockBuilder(HandlerLocator::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $locatorMock->expects($this->once())
+        $locatorMock->expects(static::once())
             ->method('getHandlerForCommand')
-            ->will($this->returnValue(new QueryHandlerStub()));
+            ->will(static::returnValue(new QueryHandlerStub()));
         /* @var HandlerLocator $locatorMock */
 
         (new QueryHandlerMiddleware($locatorMock))->execute(QueryStub::instance(), 'strlen');

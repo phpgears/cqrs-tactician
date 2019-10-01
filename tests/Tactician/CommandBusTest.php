@@ -28,7 +28,7 @@ class CommandBusTest extends TestCase
         $tacticianMock = $this->getMockBuilder(TacticianBus::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $tacticianMock->expects($this->once())
+        $tacticianMock->expects(static::once())
             ->method('handle');
         /* @var TacticianBus $tacticianMock */
 

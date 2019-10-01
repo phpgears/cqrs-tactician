@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician\Tests;
 
+use Gears\CQRS\Exception\InvalidQueryException;
+use Gears\CQRS\Exception\InvalidQueryHandlerException;
 use Gears\CQRS\Tactician\QueryInflector;
 use Gears\CQRS\Tactician\Tests\Stub\QueryHandlerStub;
 use Gears\CQRS\Tactician\Tests\Stub\QueryStub;
@@ -23,21 +25,19 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryInflectorTest extends TestCase
 {
-    /**
-     * @expectedException \Gears\CQRS\Exception\InvalidQueryException
-     * @expectedExceptionMessage Query must implement Gears\CQRS\Query interface, string given
-     */
     public function testInvalidCommand(): void
     {
+        $this->expectException(InvalidQueryException::class);
+        $this->expectExceptionMessage('Query must implement Gears\CQRS\Query interface, string given');
+
         (new QueryInflector())->inflect('', '');
     }
 
-    /**
-     * @expectedException \Gears\CQRS\Exception\InvalidQueryHandlerException
-     * @expectedExceptionMessage Query handler must implement Gears\CQRS\QueryHandler interface, string given
-     */
     public function testInvalidCommandHandler(): void
     {
+        $this->expectException(InvalidQueryHandlerException::class);
+        $this->expectExceptionMessage('Query handler must implement Gears\CQRS\QueryHandler interface, string given');
+
         (new QueryInflector())->inflect(QueryStub::instance(), '');
     }
 
@@ -46,6 +46,6 @@ class QueryInflectorTest extends TestCase
         $inflected = (new QueryInflector())
             ->inflect(QueryStub::instance(), new QueryHandlerStub());
 
-        $this->assertSame('handle', $inflected);
+        static::assertSame('handle', $inflected);
     }
 }
