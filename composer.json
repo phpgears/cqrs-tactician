@@ -27,7 +27,7 @@
   "require": {
     "php": "^7.1",
     "league/tactician": "^1.0",
-    "phpgears/cqrs": "~0.3"
+    "phpgears/cqrs": "~0.3.1"
   },
   "require-dev": {
     "brainmaestro/composer-git-hooks": "^2.1",

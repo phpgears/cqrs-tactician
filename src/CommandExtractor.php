@@ -14,23 +14,21 @@ declare(strict_types=1);
 namespace Gears\CQRS\Tactician;
 
 use Gears\CQRS\Command;
-use Gears\CQRS\CommandHandler;
 use Gears\CQRS\Exception\InvalidCommandException;
-use Gears\CQRS\Exception\InvalidCommandHandlerException;
-use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
+use League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor;
 
-final class CommandInflector implements MethodNameInflector
+final class CommandExtractor implements CommandNameExtractor
 {
     /**
-     * Return the method name to call on the command handler and return it.
+     * Extract the name from a command.
      *
      * @param mixed $command
-     * @param mixed $handler
      *
      * @throws InvalidCommandException
-     * @throws InvalidCommandHandlerException
+     *
+     * @return string
      */
-    public function inflect($command, $handler): string
+    public function extract($command)
     {
         if (!$command instanceof Command) {
             throw new InvalidCommandException(\sprintf(
@@ -40,14 +38,6 @@ final class CommandInflector implements MethodNameInflector
             ));
         }
 
-        if (!$handler instanceof CommandHandler) {
-            throw new InvalidCommandHandlerException(\sprintf(
-                'Command handler must implement "%s" interface, "%s" given',
-                CommandHandler::class,
-                \is_object($handler) ? \get_class($handler) : \gettype($handler)
-            ));
-        }
-
-        return 'handle';
+        return $command->getCommandType();
     }
 }

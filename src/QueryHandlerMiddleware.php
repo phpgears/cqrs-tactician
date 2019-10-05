@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Gears\CQRS\Tactician;
 
 use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\Locator\HandlerLocator;
 
 final class QueryHandlerMiddleware extends TacticianHandlerMiddleware
@@ -27,7 +26,7 @@ final class QueryHandlerMiddleware extends TacticianHandlerMiddleware
     public function __construct(HandlerLocator $handlerLocator)
     {
         parent::__construct(
-            new ClassNameExtractor(),
+            new QueryExtractor(),
             $handlerLocator,
             new QueryInflector()
         );

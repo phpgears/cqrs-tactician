@@ -35,9 +35,7 @@ require './vendor/autoload.php';
 ```php
 use Gears\CQRS\Tactician\CommandBus;
 use Gears\CQRS\Tactician\CommandHandlerMiddleware;
-use Gears\CQRS\Tactician\CommandInflector;
 use League\Tactician\CommandBus as TacticianBus;
-use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Plugins\LockingMiddleware;
 
@@ -59,9 +57,7 @@ $commandBus->handle($command);
 ```php
 use Gears\CQRS\Tactician\QueryBus;
 use Gears\CQRS\Tactician\QueryHandlerMiddleware;
-use Gears\CQRS\Tactician\QueryInflector;
 use League\Tactician\CommandBus as TacticianBus;
-use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Plugins\LockingMiddleware;
 
