@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Gears\CQRS\Tactician\Tests\Stub;
 
 use Gears\CQRS\AbstractQueryHandler;
-use Gears\CQRS\Query;
-use Gears\DTO\DTO;
 
 /**
  * Query handler stub class.
@@ -25,16 +23,18 @@ class QueryHandlerStub extends AbstractQueryHandler
     /**
      * {@inheritdoc}
      */
-    protected function getSupportedQueryType(): string
+    protected function getSupportedQueryTypes(): array
     {
-        return QueryStub::class;
+        return [QueryStub::class];
     }
 
     /**
-     * {@inheritdoc}
+     * @param QueryStub $query
+     *
+     * @return bool
      */
-    protected function handleQuery(Query $query): DTO
+    protected function handleQueryStub(QueryStub $query): bool
     {
-        return DTOStub::instance();
+        return true;
     }
 }

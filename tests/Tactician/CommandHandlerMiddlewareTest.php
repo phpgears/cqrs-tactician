@@ -28,9 +28,9 @@ class CommandHandlerMiddlewareTest extends TestCase
             ->getMock();
         $locatorMock->expects(static::once())
             ->method('getHandlerForCommand')
-            ->will(static::returnValue(new CommandHandlerStub()));
+            ->willReturn(new CommandHandlerStub());
         /* @var HandlerLocator $locatorMock */
 
-        (new CommandHandlerMiddleware($locatorMock))->execute(CommandStub::instance(), 'strlen');
+        static::assertNull((new CommandHandlerMiddleware($locatorMock))->execute(CommandStub::instance(), 'strlen'));
     }
 }

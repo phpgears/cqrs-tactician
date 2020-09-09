@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician\Tests;
 
-use Gears\CQRS\Exception\QueryReturnException;
 use Gears\CQRS\Tactician\QueryBus;
-use Gears\CQRS\Tactician\Tests\Stub\DTOStub;
 use Gears\CQRS\Tactician\Tests\Stub\QueryStub;
 use League\Tactician\CommandBus as TacticianBus;
 use PHPUnit\Framework\TestCase;
@@ -32,27 +30,9 @@ class QueryBusTest extends TestCase
             ->getMock();
         $tacticianMock->expects(static::once())
             ->method('handle')
-            ->will(static::returnValue(DTOStub::instance()));
+            ->willReturn('return');
         /* @var TacticianBus $tacticianMock */
 
-        (new QueryBus($tacticianMock))->handle(QueryStub::instance());
-    }
-
-    public function testInvalidReturn(): void
-    {
-        $this->expectException(QueryReturnException::class);
-        $this->expectExceptionMessageRegExp(
-            '/^Query handler for .+\\\QueryStub should return an instance of Gears\\\DTO\\\DTO$/'
-        );
-
-        $tacticianMock = $this->getMockBuilder(TacticianBus::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $tacticianMock->expects(static::once())
-            ->method('handle')
-            ->will(static::returnValue(false));
-        /* @var TacticianBus $tacticianMock */
-
-        (new QueryBus($tacticianMock))->handle(QueryStub::instance());
+        static::assertSame('return', (new QueryBus($tacticianMock))->handle(QueryStub::instance()));
     }
 }

@@ -24,15 +24,15 @@ class CommandHandlerStub extends AbstractCommandHandler
     /**
      * {@inheritdoc}
      */
-    protected function getSupportedCommandType(): string
+    protected function getSupportedCommandTypes(): array
     {
-        return CommandStub::class;
+        return [CommandStub::class];
     }
 
     /**
-     * {@inheritdoc}
+     * @param CommandStub $command
      */
-    protected function handleCommand(Command $command): void
+    protected function handleCommandStub(CommandStub $command): void
     {
     }
 }

@@ -16,7 +16,6 @@ namespace Gears\CQRS\Tactician;
 use Gears\CQRS\Exception\QueryReturnException;
 use Gears\CQRS\Query;
 use Gears\CQRS\QueryBus as QueryBusInterface;
-use Gears\DTO\DTO;
 use League\Tactician\CommandBus as TacticianCommandBus;
 
 final class QueryBus implements QueryBusInterface
@@ -43,18 +42,8 @@ final class QueryBus implements QueryBusInterface
      *
      * @throws QueryReturnException
      */
-    public function handle(Query $query): DTO
+    public function handle(Query $query)
     {
-        $dto = $this->wrappedCommandBus->handle($query);
-
-        if (!$dto instanceof DTO) {
-            throw new QueryReturnException(\sprintf(
-                'Query handler for %s should return an instance of %s',
-                \get_class($query),
-                DTO::class
-            ));
-        }
-
-        return $dto;
+        return $this->wrappedCommandBus->handle($query);
     }
 }
