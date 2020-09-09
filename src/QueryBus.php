@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician;
 
-use Gears\CQRS\Exception\QueryReturnException;
 use Gears\CQRS\Query;
 use Gears\CQRS\QueryBus as QueryBusInterface;
 use League\Tactician\CommandBus as TacticianCommandBus;
@@ -39,8 +38,6 @@ final class QueryBus implements QueryBusInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws QueryReturnException
      */
     public function handle(Query $query)
     {
