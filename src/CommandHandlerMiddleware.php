@@ -13,22 +13,42 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician;
 
+use Gears\CQRS\Async\ReceivedCommand;
 use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
+use League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor;
 use League\Tactician\Handler\Locator\HandlerLocator;
+use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 
 final class CommandHandlerMiddleware extends TacticianHandlerMiddleware
 {
     /**
      * CommandHandlerMiddleware constructor.
      *
-     * @param HandlerLocator $handlerLocator
+     * @param HandlerLocator            $handlerLocator
+     * @param CommandNameExtractor|null $commandNameExtractor
+     * @param MethodNameInflector|null  $methodNameInflector
      */
-    public function __construct(HandlerLocator $handlerLocator)
-    {
+    public function __construct(
+        HandlerLocator $handlerLocator,
+        ?CommandNameExtractor $commandNameExtractor = null,
+        ?MethodNameInflector $methodNameInflector = null
+    ) {
         parent::__construct(
-            new CommandExtractor(),
+            $commandNameExtractor ?? new CommandExtractor(),
             $handlerLocator,
-            new CommandInflector()
+            $methodNameInflector ?? new CommandInflector()
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function execute($command, callable $next)
+    {
+        if ($command instanceof ReceivedCommand) {
+            $command = $command->getWrappedCommand();
+        }
+
+        return parent::execute($command, $next);
     }
 }

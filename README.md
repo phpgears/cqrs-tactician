@@ -32,43 +32,127 @@ require './vendor/autoload.php';
 
 ### Commands Bus
 
+As simple as adding CommandHandlerMiddleware to a Tactician's middleware list
+
 ```php
 use Gears\CQRS\Tactician\CommandBus;
 use Gears\CQRS\Tactician\CommandHandlerMiddleware;
-use League\Tactician\CommandBus as TacticianBus;
+use League\Tactician\CommandBus as TacticianCommandBus;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Plugins\LockingMiddleware;
 
 $commandToHandlerMap = [];
         
-$tacticianBus = new TacticianBus([
+$tacticianCommandBus = new TacticianCommandBus([
     new LockingMiddleware(),
     new CommandHandlerMiddleware(new InMemoryLocator($commandToHandlerMap)),
 ]);
 
-$commandBus = new CommandBus($tacticianBus);
+$commandBus = new CommandBus($tacticianCommandBus);
 
 /** @var \Gears\CQRS\Command $command */
 $commandBus->handle($command);
 ```
+
+#### Asynchronicity
+
+To allow commands to be handled asynchronously you should include AsyncCommandQueueMiddleware before CommandHandlerMiddleware
+
+AsyncCommandQueueMiddleware requires an implementation of `Gears\CQRS\Async\CommandQueue` which will be responsible for command queueing and an instance of `Gears\CQRS\Async\Discriminator\CommandDiscriminator` used to discriminate which commands should be queued
+
+```php
+use Gears\CQRS\Async\Discriminator\ParameterCommandDiscriminator;
+use Gears\CQRS\Async\Serializer\NativePhpCommandSerializer;
+use Gears\CQRS\Tactician\CommandBus;
+use Gears\CQRS\Tactician\AsyncCommandQueueMiddleware;
+use Gears\CQRS\Tactician\CommandHandlerMiddleware;
+use League\Tactician\CommandBus as TacticianCommandBus;
+use League\Tactician\Handler\Locator\InMemoryLocator;
+use League\Tactician\Plugins\LockingMiddleware;
+
+/* @var \Gears\CQRS\CommandBus $commandBus */
+
+/* @var \Gears\CQRS\Async\CommandQueue $commandQueue */
+$commandQueue = new CommandQueueImplementation(new NativePhpCommandSerializer());
+
+$commandToHandlerMap = [];
+
+$tacticianCommandBus = new TacticianCommandBus([
+    new LockingMiddleware(),
+    new AsyncCommandQueueMiddleware($commandQueue, new ParameterCommandDiscriminator('async')),
+    new CommandHandlerMiddleware(new InMemoryLocator($commandToHandlerMap)),
+]);
+
+$commandBus = new CommandBus($tacticianCommandBus);
+
+/** @var \Gears\CQRS\Command $command */
+$commandBus->handle($command);
+```
+
+If you'd like to send different commands to different message queues you can just add more instances of AsyncCommandQueueMiddleware
+
+To know more about how to create and configure a CommandQueue head to [phpgears/cqrs-async](https://github.com/phpgears/cqrs-async)
+
+##### Dequeueing
+
+This part is highly dependent on your message queue, though command serializers can be used to deserialize queue messages
+
+This is just an example of the process
+
+```php
+use Gears\CQRS\Async\ReceivedCommand;
+use Gears\CQRS\Async\Serializer\NativePhpCommandSerializer;
+use Gears\CQRS\Tactician\CommandBus;
+use Gears\CQRS\Tactician\CommandHandlerMiddleware;
+use League\Tactician\CommandBus as TacticianCommandBus;
+use League\Tactician\Handler\Locator\InMemoryLocator;
+use League\Tactician\Plugins\LockingMiddleware;
+
+$commandToHandlerMap = [];
+
+$tacticianCommandBus = new TacticianCommandBus([
+    new LockingMiddleware(),
+    // AsyncCommandQueueMiddleware could be added
+    new CommandHandlerMiddleware(new InMemoryLocator($commandToHandlerMap)),
+]);
+
+$commandBus = new CommandBus($tacticianCommandBus);
+
+$serializer = new NativePhpCommandSerializer();
+
+while (true) {
+    /* @var your_message_queue_manager $queue */
+    $message = $queue->getMessage(); // extract messages from queue
+
+    if ($message !== null) {
+        $command = $serializer->fromSerialized($message);
+
+        $commandBus->handle(new ReceivedCommand($command));
+    }
+}
+```
+
+In this example the deserialized commands are wrapped in Gears\CQRS\Async\ReceivedCommand in order to avoid infinite loops should you decide to handle the commands to **the same command bus** that queued them in the first place
+
+If you decide to use **another bus** than the one that queued the command on the dequeue side, you don't need to do this wrapping (in the example above can be removed)
 
 ### Query Bus
 
 ```php
 use Gears\CQRS\Tactician\QueryBus;
 use Gears\CQRS\Tactician\QueryHandlerMiddleware;
-use League\Tactician\CommandBus as TacticianBus;
+use League\Tactician\CommandBus as TacticianQueryBus;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Plugins\LockingMiddleware;
 
 $queryToHandlerMap = [];
         
-$tacticianBus = new TacticianBus([
+$tacticianQueryBus = new TacticianQueryBus([
     new LockingMiddleware(),
     new QueryHandlerMiddleware(new InMemoryLocator($queryToHandlerMap)),
 ]);
 
-$queryBus = new QueryBus($tacticianBus);
+$queryBus = new QueryBus($tacticianQueryBus);
 
 /** @var \Gears\CQRS\Query $query */
 $result = $queryBus->handle($query);
