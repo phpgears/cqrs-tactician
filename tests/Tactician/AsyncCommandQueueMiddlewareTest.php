@@ -15,7 +15,7 @@ namespace Gears\CQRS\Tactician\Tests;
 
 use Gears\CQRS\Async\CommandQueue;
 use Gears\CQRS\Async\Discriminator\CommandDiscriminator;
-use Gears\CQRS\Async\ReceivedCommand;
+use Gears\CQRS\Async\QueuedCommand;
 use Gears\CQRS\Command;
 use Gears\CQRS\Exception\InvalidCommandException;
 use Gears\CQRS\Tactician\AsyncCommandQueueMiddleware;
@@ -97,7 +97,7 @@ class AsyncCommandQueueMiddlewareTest extends TestCase
         $commandDiscriminator->expects(static::never())
             ->method('shouldEnqueue');
 
-        $mockCommand = new ReceivedCommand(CommandStub::instance());
+        $mockCommand = new QueuedCommand(CommandStub::instance());
 
         $callable = function (Command $command) use ($mockCommand): void {
             static::assertSame($command, $mockCommand);

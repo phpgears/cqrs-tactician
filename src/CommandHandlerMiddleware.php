@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician;
 
-use Gears\CQRS\Async\ReceivedCommand;
+use Gears\CQRS\Async\QueuedCommand;
 use League\Tactician\Handler\CommandHandlerMiddleware as TacticianHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\CommandNameExtractor;
 use League\Tactician\Handler\Locator\HandlerLocator;
@@ -45,7 +45,7 @@ final class CommandHandlerMiddleware extends TacticianHandlerMiddleware
      */
     public function execute($command, callable $next)
     {
-        if ($command instanceof ReceivedCommand) {
+        if ($command instanceof QueuedCommand) {
             $command = $command->getWrappedCommand();
         }
 

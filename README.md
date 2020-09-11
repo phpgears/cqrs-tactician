@@ -100,7 +100,6 @@ This part is highly dependent on your message queue, though command serializers 
 This is just an example of the process
 
 ```php
-use Gears\CQRS\Async\ReceivedCommand;
 use Gears\CQRS\Async\Serializer\NativePhpCommandSerializer;
 use Gears\CQRS\Tactician\CommandBus;
 use Gears\CQRS\Tactician\CommandHandlerMiddleware;
@@ -112,12 +111,10 @@ $commandToHandlerMap = [];
 
 $tacticianCommandBus = new TacticianCommandBus([
     new LockingMiddleware(),
-    // AsyncCommandQueueMiddleware could be added
     new CommandHandlerMiddleware(new InMemoryLocator($commandToHandlerMap)),
 ]);
 
 $commandBus = new CommandBus($tacticianCommandBus);
-
 $serializer = new NativePhpCommandSerializer();
 
 while (true) {
@@ -127,14 +124,10 @@ while (true) {
     if ($message !== null) {
         $command = $serializer->fromSerialized($message);
 
-        $commandBus->handle(new ReceivedCommand($command));
+        $commandBus->handle($command);
     }
 }
 ```
-
-In this example the deserialized commands are wrapped in Gears\CQRS\Async\ReceivedCommand in order to avoid infinite loops should you decide to handle the commands to **the same command bus** that queued them in the first place
-
-If you decide to use **another bus** than the one that queued the command on the dequeue side, you don't need to do this wrapping (in the example above can be removed)
 
 ### Query Bus
 

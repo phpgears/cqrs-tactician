@@ -15,7 +15,7 @@ namespace Gears\CQRS\Tactician;
 
 use Gears\CQRS\Async\CommandQueue;
 use Gears\CQRS\Async\Discriminator\CommandDiscriminator;
-use Gears\CQRS\Async\ReceivedCommand;
+use Gears\CQRS\Async\QueuedCommand;
 use Gears\CQRS\Command;
 use Gears\CQRS\Exception\InvalidCommandException;
 use League\Tactician\Middleware;
@@ -64,8 +64,8 @@ final class AsyncCommandQueueMiddleware implements Middleware
             ));
         }
 
-        if (!$command instanceof ReceivedCommand && $this->discriminator->shouldEnqueue($command)) {
-            $this->commandQueue->send($command);
+        if (!$command instanceof QueuedCommand && $this->discriminator->shouldEnqueue($command)) {
+            $this->commandQueue->send(new QueuedCommand($command));
 
             return;
         }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\CQRS\Tactician\Tests;
 
-use Gears\CQRS\Async\ReceivedCommand;
+use Gears\CQRS\Async\QueuedCommand;
 use Gears\CQRS\Tactician\CommandHandlerMiddleware;
 use Gears\CQRS\Tactician\Tests\Stub\CommandHandlerStub;
 use Gears\CQRS\Tactician\Tests\Stub\CommandStub;
@@ -30,9 +30,8 @@ class CommandHandlerMiddlewareTest extends TestCase
         $locatorMock->expects(static::once())
             ->method('getHandlerForCommand')
             ->willReturn(new CommandHandlerStub());
-        /* @var HandlerLocator $locatorMock */
 
         static::assertNull((new CommandHandlerMiddleware($locatorMock))
-            ->execute(new ReceivedCommand(CommandStub::instance()), 'strlen'));
+            ->execute(new QueuedCommand(CommandStub::instance()), 'strlen'));
     }
 }
