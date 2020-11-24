@@ -34,7 +34,7 @@ final class CommandInflector implements MethodNameInflector
     {
         if (!$command instanceof Command) {
             throw new InvalidCommandException(\sprintf(
-                'Command must implement "%s" interface, "%s" given',
+                'Command must implement "%s" interface, "%s" given.',
                 Command::class,
                 \is_object($command) ? \get_class($command) : \gettype($command)
             ));
@@ -42,7 +42,7 @@ final class CommandInflector implements MethodNameInflector
 
         if (!$handler instanceof CommandHandler) {
             throw new InvalidCommandHandlerException(\sprintf(
-                'Command handler must implement "%s" interface, "%s" given',
+                'Command handler must implement "%s" interface, "%s" given.',
                 CommandHandler::class,
                 \is_object($handler) ? \get_class($handler) : \gettype($handler)
             ));

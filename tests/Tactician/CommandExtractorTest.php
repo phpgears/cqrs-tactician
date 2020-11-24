@@ -26,7 +26,7 @@ class CommandExtractorTest extends TestCase
     public function testInvalidCommand(): void
     {
         $this->expectException(InvalidCommandException::class);
-        $this->expectExceptionMessage('Command must implement "Gears\CQRS\Command" interface, "stdClass" given');
+        $this->expectExceptionMessage('Command must implement "Gears\CQRS\Command" interface, "stdClass" given.');
 
         (new CommandExtractor())->extract(new \stdClass());
     }

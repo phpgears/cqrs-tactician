@@ -32,7 +32,7 @@ final class QueryExtractor implements CommandNameExtractor
     {
         if (!$query instanceof Query) {
             throw new InvalidQueryException(\sprintf(
-                'Query must implement "%s" interface, "%s" given',
+                'Query must implement "%s" interface, "%s" given.',
                 Query::class,
                 \is_object($query) ? \get_class($query) : \gettype($query)
             ));

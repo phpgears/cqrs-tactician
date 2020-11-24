@@ -49,7 +49,7 @@ final class QueryBus implements QueryBusInterface
 
         if (!$dto instanceof DTO) {
             throw new QueryReturnException(\sprintf(
-                'Query handler for %s should return an instance of %s',
+                'Query handler for "%s" should return an instance of "%s".',
                 \get_class($query),
                 DTO::class
             ));

@@ -42,7 +42,7 @@ class QueryBusTest extends TestCase
     {
         $this->expectException(QueryReturnException::class);
         $this->expectExceptionMessageRegExp(
-            '/^Query handler for .+\\\QueryStub should return an instance of Gears\\\DTO\\\DTO$/'
+            '/^Query handler for ".+\\\QueryStub" should return an instance of "Gears\\\DTO\\\DTO"\.$/'
         );
 
         $tacticianMock = $this->getMockBuilder(TacticianBus::class)

@@ -28,7 +28,7 @@ class QueryInflectorTest extends TestCase
     public function testInvalidCommand(): void
     {
         $this->expectException(InvalidQueryException::class);
-        $this->expectExceptionMessage('Query must implement "Gears\CQRS\Query" interface, "string" given');
+        $this->expectExceptionMessage('Query must implement "Gears\CQRS\Query" interface, "string" given.');
 
         (new QueryInflector())->inflect('', '');
     }
@@ -37,7 +37,7 @@ class QueryInflectorTest extends TestCase
     {
         $this->expectException(InvalidQueryHandlerException::class);
         $this->expectExceptionMessage(
-            'Query handler must implement "Gears\CQRS\QueryHandler" interface, "string" given'
+            'Query handler must implement "Gears\CQRS\QueryHandler" interface, "string" given.'
         );
 
         (new QueryInflector())->inflect(QueryStub::instance(), '');
