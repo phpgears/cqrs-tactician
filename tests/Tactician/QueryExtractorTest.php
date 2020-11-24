@@ -26,7 +26,7 @@ class QueryExtractorTest extends TestCase
     public function testInvalidQuery(): void
     {
         $this->expectException(InvalidQueryException::class);
-        $this->expectExceptionMessage('Query must implement "Gears\CQRS\Query" interface, "stdClass" given');
+        $this->expectExceptionMessage('Query must implement "Gears\CQRS\Query" interface, "stdClass" given.');
 
         (new QueryExtractor())->extract(new \stdClass());
     }

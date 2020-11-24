@@ -32,7 +32,7 @@ final class CommandExtractor implements CommandNameExtractor
     {
         if (!$command instanceof Command) {
             throw new InvalidCommandException(\sprintf(
-                'Command must implement "%s" interface, "%s" given',
+                'Command must implement "%s" interface, "%s" given.',
                 Command::class,
                 \is_object($command) ? \get_class($command) : \gettype($command)
             ));

@@ -2,7 +2,7 @@
 [![Latest Version](https://img.shields.io/packagist/v/phpgears/cqrs-tactician.svg?style=flat-square)](https://packagist.org/packages/phpgears/cqrs-tactician)
 [![License](https://img.shields.io/github/license/phpgears/cqrs-tactician.svg?style=flat-square)](https://github.com/phpgears/cqrs-tactician/blob/master/LICENSE)
 
-[![Build Status](https://img.shields.io/travis/phpgears/cqrs-tactician.svg?style=flat-square)](https://travis-ci.org/phpgears/cqrs-tactician)
+[![Build Status](https://img.shields.io/travis/com/phpgears/cqrs-tactician.svg?style=flat-square)](https://travis-ci.com/github/phpgears/cqrs-tactician)
 [![Style Check](https://styleci.io/repos/150868308/shield)](https://styleci.io/repos/150868308)
 [![Code Quality](https://img.shields.io/scrutinizer/g/phpgears/cqrs-tactician.svg?style=flat-square)](https://scrutinizer-ci.com/g/phpgears/cqrs-tactician)
 [![Code Coverage](https://img.shields.io/coveralls/phpgears/cqrs-tactician.svg?style=flat-square)](https://coveralls.io/github/phpgears/cqrs-tactician)

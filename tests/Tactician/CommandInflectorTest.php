@@ -28,7 +28,7 @@ class CommandInflectorTest extends TestCase
     public function testInvalidCommand(): void
     {
         $this->expectException(InvalidCommandException::class);
-        $this->expectExceptionMessage('Command must implement "Gears\CQRS\Command" interface, "string" given');
+        $this->expectExceptionMessage('Command must implement "Gears\CQRS\Command" interface, "string" given.');
 
         (new CommandInflector())->inflect('', '');
     }
@@ -37,7 +37,7 @@ class CommandInflectorTest extends TestCase
     {
         $this->expectException(InvalidCommandHandlerException::class);
         $this->expectExceptionMessage(
-            'Command handler must implement "Gears\CQRS\CommandHandler" interface, "string" given'
+            'Command handler must implement "Gears\CQRS\CommandHandler" interface, "string" given.'
         );
 
         (new CommandInflector())->inflect(CommandStub::instance(), '');

@@ -34,7 +34,7 @@ final class QueryInflector implements MethodNameInflector
     {
         if (!$command instanceof Query) {
             throw new InvalidQueryException(\sprintf(
-                'Query must implement "%s" interface, "%s" given',
+                'Query must implement "%s" interface, "%s" given.',
                 Query::class,
                 \is_object($command) ? \get_class($command) : \gettype($command)
             ));
@@ -42,7 +42,7 @@ final class QueryInflector implements MethodNameInflector
 
         if (!$handler instanceof QueryHandler) {
             throw new InvalidQueryHandlerException(\sprintf(
-                'Query handler must implement "%s" interface, "%s" given',
+                'Query handler must implement "%s" interface, "%s" given.',
                 QueryHandler::class,
                 \is_object($handler) ? \get_class($handler) : \gettype($handler)
             ));
